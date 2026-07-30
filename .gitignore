@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+uploads/*
+!uploads/.gitkeep
+
+# Private presentation material is intentionally kept out of the public repository.
+FOUNDER_EMAIL.md
+PROJECT_REPORT.pdf
+PROJECT_REPORT.docx

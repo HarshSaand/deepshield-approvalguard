@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeepShield ApprovalGuard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>.media-placeholder video{width:100%;height:100%;object-fit:contain;background:#0b1511;display:block}.media-placeholder:before{pointer-events:none}.media-meta{pointer-events:none;text-shadow:0 1px 5px #000}</style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">Harsh Prototype Experiments</a>
+    <div class="product"><span class="status-dot"></span> DeepShield ApprovalGuard</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Financial approval integrity</p>
+      <h1>See what changed before approving what matters.</h1>
+      <p class="lede">A multimodal review layer for high-risk video approvals. It checks face, voice, lip-sync and recording continuity—then gives an investigator evidence, not a black-box verdict.</p>
+      <div class="mode-switch" role="tablist">
+        <button class="mode active" data-mode="demo">Guided demo</button>
+        <button class="mode" data-mode="upload">Test a file</button>
+      </div>
+    </section>
+
+    <section id="demoMode" class="workspace">
+      <aside class="case-list">
+        <p class="section-label">Approval scenarios</p>
+        <button class="case active" data-case="video_tampered_01">
+          <span class="case-icon alert">01</span><span><strong>Supplier payment</strong><small>Synthetic face-region splice</small></span>
+        </button>
+        <button class="case" data-case="audio_replaced_01">
+          <span class="case-icon">02</span><span><strong>Treasury release</strong><small>Audio track replaced</small></span>
+        </button>
+        <button class="case" data-case="av_desync_01">
+          <span class="case-icon">03</span><span><strong>Limit increase</strong><small>Audio and video shifted</small></span>
+        </button>
+        <button class="case" data-case="clean_sync_01">
+          <span class="case-icon good">04</span><span><strong>Account recovery</strong><small>Synthetic control recording</small></span>
+        </button>
+      </aside>
+
+      <div class="review">
+        <div class="media-card">
+          <div class="media-placeholder">
+            <video id="mediaPlayer" controls preload="metadata"></video>
+            <div class="media-meta"><span id="caseTitle">Supplier payment approval</span><span id="mediaDuration">00:05</span></div>
+          </div>
+          <div class="timeline-wrap">
+            <div class="timeline-head"><span>Evidence timeline</span><span>Click a segment to inspect</span></div>
+            <div id="timeline" class="timeline"></div>
+            <div class="ticks"><span>00:00</span><span>00:02</span><span>00:03</span><span>00:05</span></div>
+          </div>
+        </div>
+
+        <div class="decision-card">
+          <div>
+            <p class="section-label">Review suggestion</p>
+            <div id="decision" class="decision danger">Hold for verification</div>
+            <p id="decisionCopy" class="muted">Strong manipulation evidence appears during the spoken approval. Confirm through an independent channel.</p>
+          </div>
+          <button id="downloadBtn" class="download">Download evidence report</button>
+        </div>
+
+        <div id="evidenceGrid" class="evidence-grid"></div>
+
+        <section class="detail-grid">
+          <div class="panel">
+            <div class="panel-head"><h2>Flagged moments</h2><span id="flagCount" class="badge">3 frames</span></div>
+            <div id="frames" class="frames"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Review context</h2><span class="badge neutral">Not AI</span></div>
+            <dl>
+              <div><dt>Workflow</dt><dd id="workflowValue">Supplier payment approval</dd></div>
+              <div><dt>Amount</dt><dd id="amountValue">SGD 184,000</dd></div>
+              <div><dt>Dataset label</dt><dd id="labelValue">video_tampered</dd></div>
+              <div><dt>Media quality</dt><dd id="qualityValue">Good</dd></div>
+            </dl>
+            <p class="boundary">Transaction details add reviewer context. They do not change the neural model outputs shown above.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="uploadMode" class="upload-panel hidden">
+      <div id="dropzone" class="dropzone">
+        <div class="upload-mark">↑</div>
+        <h2>Upload an approval recording</h2>
+        <p>MP4, MOV, WEBM, AVI, WAV, FLAC, MP3 or M4A</p>
+        <label class="file-button">Choose file<input id="fileInput" type="file" accept="video/*,audio/*"></label>
+        <small>Files stay on this device in the local prototype.</small>
+      </div>
+      <div id="fileReady" class="file-ready hidden">
+        <span class="file-type">MEDIA</span><div><strong id="fileName"></strong><small id="fileSize"></small></div><button id="analyseBtn">Analyse locally</button>
+      </div>
+      <p id="uploadStatus" class="upload-note">The selected file is analysed locally. Nothing is sent to a cloud service.</p>
+    </section>
+
+    <section class="method">
+      <p class="section-label">How the prototype reasons</p>
+      <div class="flow">
+        <div><b>01</b><strong>Ingest</strong><span>Video or audio approval</span></div><i>→</i>
+        <div><b>02</b><strong>Validate</strong><span>Quality and media normalization</span></div><i>→</i>
+        <div><b>03</b><strong>Analyse</strong><span>Four independent signals</span></div><i>→</i>
+        <div><b>04</b><strong>Review</strong><span>Evidence with abstention</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>Prototype for controlled evaluation</span><span>Decision support—not an automatic fraud verdict</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>

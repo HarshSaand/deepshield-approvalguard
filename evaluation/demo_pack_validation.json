@@ -1,0 +1,210 @@
+{
+  "scope": "local functional-pack media QA; not AI accuracy",
+  "manifest_rows": 24,
+  "files_present": 24,
+  "files_decodable": 24,
+  "files_with_video": 24,
+  "files_with_audio": 24,
+  "duration_min_s": 5.0,
+  "duration_max_s": 5.0,
+  "conditions": {
+    "audio_replaced": 6,
+    "av_desync": 6,
+    "clean_sync": 6,
+    "video_tampered": 6
+  },
+  "checks": [
+    {
+      "sample_id": "clean_sync_01",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "clean_sync_02",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "clean_sync_03",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "clean_sync_04",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "clean_sync_05",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "clean_sync_06",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "audio_replaced_01",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "audio_replaced_02",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "audio_replaced_03",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "audio_replaced_04",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "audio_replaced_05",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "audio_replaced_06",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "video_tampered_01",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "video_tampered_02",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "video_tampered_03",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "video_tampered_04",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "video_tampered_05",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "video_tampered_06",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "av_desync_01",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "av_desync_02",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "av_desync_03",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "av_desync_04",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "av_desync_05",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    },
+    {
+      "sample_id": "av_desync_06",
+      "exists": true,
+      "decodable": true,
+      "has_video": true,
+      "has_audio": true,
+      "duration_s": 5.0
+    }
+  ]
+}

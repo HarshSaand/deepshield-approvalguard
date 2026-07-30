@@ -1,0 +1,25 @@
+attack_id,codec,filename,label,source,speaker_id,subset,utterance_id,vocoder,local_path,example_pack_role
+-,mp3m4a,DF_E_2000053.flac,bonafide,vcc2018,VCC2TM2,eval,DF_E_2000053,bonafide,audio/DF_E_2000053.flac,direct upload example; not a standalone benchmark
+-,mp3m4a,DF_E_2000058.flac,bonafide,asvspoof,LA_0048,eval,DF_E_2000058,bonafide,audio/DF_E_2000058.flac,direct upload example; not a standalone benchmark
+-,high_m4a,DF_E_2000079.flac,bonafide,vcc2020,TEM2,eval,DF_E_2000079,bonafide,audio/DF_E_2000079.flac,direct upload example; not a standalone benchmark
+-,oggm4a,DF_E_2000246.flac,bonafide,asvspoof,LA_0004,hidden,DF_E_2000246,bonafide,audio/DF_E_2000246.flac,direct upload example; not a standalone benchmark
+-,high_ogg,DF_E_2000503.flac,bonafide,asvspoof,LA_0044,eval,DF_E_2000503,bonafide,audio/DF_E_2000503.flac,direct upload example; not a standalone benchmark
+-,nocodec,DF_E_2000508.flac,bonafide,vcc2020,TFM1,eval,DF_E_2000508,bonafide,audio/DF_E_2000508.flac,direct upload example; not a standalone benchmark
+-,oggm4a,DF_E_2000531.flac,bonafide,vcc2018,VCC2SF3,eval,DF_E_2000531,bonafide,audio/DF_E_2000531.flac,direct upload example; not a standalone benchmark
+-,low_ogg,DF_E_2000676.flac,bonafide,vcc2018,VCC2SM1,eval,DF_E_2000676,bonafide,audio/DF_E_2000676.flac,direct upload example; not a standalone benchmark
+-,oggm4a,DF_E_2001149.flac,bonafide,asvspoof,LA_0011,eval,DF_E_2001149,bonafide,audio/DF_E_2001149.flac,direct upload example; not a standalone benchmark
+-,high_ogg,DF_E_2001163.flac,bonafide,asvspoof,LA_0019,eval,DF_E_2001163,bonafide,audio/DF_E_2001163.flac,direct upload example; not a standalone benchmark
+-,high_ogg,DF_E_2001230.flac,bonafide,asvspoof,LA_0036,eval,DF_E_2001230,bonafide,audio/DF_E_2001230.flac,direct upload example; not a standalone benchmark
+-,low_ogg,DF_E_2001695.flac,bonafide,vcc2020,TEM2,eval,DF_E_2001695,bonafide,audio/DF_E_2001695.flac,direct upload example; not a standalone benchmark
+A14,nocodec,DF_E_2000011.flac,spoof,asvspoof,LA_0023,progress,DF_E_2000011,traditional_vocoder,audio/DF_E_2000011.flac,direct upload example; not a standalone benchmark
+Task1-team20,low_m4a,DF_E_2000013.flac,spoof,vcc2020,TEF2,eval,DF_E_2000013,neural_vocoder_nonautoregressive,audio/DF_E_2000013.flac,direct upload example; not a standalone benchmark
+Task2-team12,mp3m4a,DF_E_2000024.flac,spoof,vcc2020,TGF1,eval,DF_E_2000024,traditional_vocoder,audio/DF_E_2000024.flac,direct upload example; not a standalone benchmark
+A09,mp3m4a,DF_E_2000026.flac,spoof,asvspoof,LA_0043,eval,DF_E_2000026,traditional_vocoder,audio/DF_E_2000026.flac,direct upload example; not a standalone benchmark
+A12,mp3m4a,DF_E_2000027.flac,spoof,asvspoof,LA_0021,eval,DF_E_2000027,neural_vocoder_autoregressive,audio/DF_E_2000027.flac,direct upload example; not a standalone benchmark
+SPO-N12,low_mp3,DF_E_2000028.flac,spoof,vcc2018,VCC2TM2,eval,DF_E_2000028,traditional_vocoder,audio/DF_E_2000028.flac,direct upload example; not a standalone benchmark
+A10,high_m4a,DF_E_2000031.flac,spoof,asvspoof,LA_0025,eval,DF_E_2000031,neural_vocoder_autoregressive,audio/DF_E_2000031.flac,direct upload example; not a standalone benchmark
+Task2-team29,high_m4a,DF_E_2000032.flac,spoof,vcc2020,TMF1,eval,DF_E_2000032,neural_vocoder_autoregressive,audio/DF_E_2000032.flac,direct upload example; not a standalone benchmark
+SPO-B01,low_m4a,DF_E_2000040.flac,spoof,vcc2018,VCC2TM1,eval,DF_E_2000040,traditional_vocoder,audio/DF_E_2000040.flac,direct upload example; not a standalone benchmark
+HUB-N06,low_m4a,DF_E_2000042.flac,spoof,vcc2018,VCC2TM2,eval,DF_E_2000042,traditional_vocoder,audio/DF_E_2000042.flac,direct upload example; not a standalone benchmark
+Task1-team09,nocodec,DF_E_2000044.flac,spoof,vcc2020,TEM2,eval,DF_E_2000044,neural_vocoder_nonautoregressive,audio/DF_E_2000044.flac,direct upload example; not a standalone benchmark
+SPO-N10,high_m4a,DF_E_2000048.flac,spoof,vcc2018,VCC2TM1,eval,DF_E_2000048,neural_vocoder_autoregressive,audio/DF_E_2000048.flac,direct upload example; not a standalone benchmark
