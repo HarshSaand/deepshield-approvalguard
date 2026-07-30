@@ -1,79 +1,121 @@
 # DeepShield ApprovalGuard
 
-ApprovalGuard is a local prototype that reviews video or audio instructions before a sensitive financial action. It separates four forms of evidence:
+DeepShield ApprovalGuard is a local multimodal AI prototype for reviewing voice and video instructions associated with sensitive financial actions. It is designed around a practical question: before a payment, account recovery, limit change, or treasury instruction moves forward, can AI surface media-integrity signals that deserve a closer look?
 
-- face-manipulation evidence from DeepfakeBench Meso4;
-- synthetic-voice evidence from AASIST;
-- learned recording-continuity evidence from ResNet-18 embeddings;
-- audio/video timing evidence from mouth-motion and audio activity.
+The system does not make a fraud decision. It analyses each modality separately, shows where suspicious evidence appears, and produces a review suggestion that can sit alongside an institution's existing controls.
 
-It then suggests `STANDARD`, `REVIEW`, `ESCALATE`, or `INSUFFICIENT EVIDENCE`. This is decision support. It does not identify a person, prove fraud, or approve a transaction.
+**Repository:** [github.com/HarshSaand/deepshield-approvalguard](https://github.com/HarshSaand/deepshield-approvalguard)
 
-## What you can try immediately
+## What the project demonstrates
 
-The folder contains 24 five-second MP4 files in `dataset/samples`:
+- real local inference with pretrained deepfake-detection models;
+- separate voice, face, recording-continuity, and audio-video timing evidence;
+- temporal analysis rather than a single unexplained file-level label;
+- quality-aware abstention when a required media stream is missing or unusable;
+- a clear review output for a financial-operations workflow;
+- reproducible sample data, evaluation results, and automated tests.
 
-- 6 synthetic controls;
-- 6 audio-replacement cases;
-- 6 visible identity-region tampering cases;
-- 6 audio/video desynchronisation cases.
+## How it works
 
-Open `dataset/manifest.csv` to see the label, transformation, affected interval, and provenance for every file. These are functional demonstration files, not a scientific accuracy benchmark.
-
-It also includes `dataset/asvspoof_examples`: **24 labelled ASVspoof 2021 DF audio clips**—12 bona-fide and 12 spoof—for direct upload testing. See that folder’s README and manifest for attribution and labels.
-
-## Before you start
-
-You need:
-
-1. A Windows or macOS computer with at least 8 GB RAM.
-2. Python 3.11 or 3.12. Python 3.13+ is not recommended for this package set.
-3. FFmpeg.
-4. An internet connection for the first installation. Model checkpoints used by ApprovalGuard are already included; torchvision may download its official ResNet-18 weights once.
-
-### Install Python
-
-Download Python 3.12 from [python.org](https://www.python.org/downloads/). On Windows, tick **Add Python to PATH** during installation.
-
-Check the installation:
-
-macOS:
-
-```bash
-python3.12 --version
+```text
+Audio or video instruction
+          |
+          v
+  Media and quality checks
+          |
+          +----------------+----------------+----------------+
+          |                |                |                |
+       AASIST           Meso4          ResNet-18       A/V activity
+     voice spoof     face tampering     continuity       alignment
+          |                |                |                |
+          +----------------+----------------+----------------+
+                                   |
+                                   v
+                    Timestamped evidence timeline
+                                   |
+                                   v
+                  STANDARD / REVIEW / ESCALATE /
+                        INSUFFICIENT EVIDENCE
 ```
 
-Windows PowerShell:
+### AI components
 
-```powershell
-py -3.12 --version
-```
+| Evidence branch | Implementation | What it contributes |
+|---|---|---|
+| Synthetic voice | AASIST spectro-temporal graph-attention network | Spoof evidence for the complete clip and temporal windows |
+| Face manipulation | DeepfakeBench Meso4 compact CNN | Frame-level face-region manipulation evidence |
+| Recording continuity | ImageNet-pretrained ResNet-18 embeddings | Learned visual discontinuity between neighbouring segments |
+| Audio-video timing | Mouth-motion and audio-activity correlation | Interpretable synchronisation evidence; this branch is signal processing rather than a trained lip-reading model |
+
+The decision layer deliberately keeps these signals separate. Its priority index is a routing aid, not a fraud probability. Two high signals suggest escalation; one high signal or two elevated signals suggest independent review. Poor-quality or missing inputs can produce an insufficient-evidence result.
+
+## Output
+
+For each uploaded recording, the interface returns:
+
+- media duration and stream availability;
+- audio and video quality checks;
+- a synthetic-voice evidence score and temporal segments;
+- face-manipulation and continuity evidence for video;
+- audio-video synchronisation evidence when both streams exist;
+- an interactive evidence timeline;
+- a review level, supporting reasons, and suggested control action;
+- a downloadable JSON record with model names, timestamps, quality fields, and a SHA-256 file hash.
+
+## Data included with the project
+
+The repository is immediately testable with 48 labelled files:
+
+- **24 five-second MP4 workflow fixtures:** six controls, six audio replacements, six visible identity-region edits, and six audio-video desynchronisation cases;
+- **24 ASVspoof 2021 DF audio examples:** 12 bona-fide and 12 spoof clips for direct voice-model testing.
+
+Labels, transformations, affected intervals, and provenance are documented in `dataset/manifest.csv` and `dataset/asvspoof_examples/manifest.csv`. The MP4 files are functional fixtures, not a scientific accuracy benchmark. `DATASET_CARD.md` explains the evaluation boundaries, while `DATASET_OPTIONS.md` identifies larger datasets for broader testing.
+
+## Locally measured voice-model result
+
+AASIST was evaluated locally on a balanced 570-file subset of ASVspoof 2021 DF:
+
+| Metric | Result |
+|---|---:|
+| ROC-AUC | 0.9078 |
+| Equal error rate | 18.60% |
+| Accuracy at the subset-selected EER threshold | 81.40% |
+| Spoof precision | 81.40% |
+| Spoof recall | 81.40% |
+| Mean model inference time on Apple MPS | 17.44 ms/file |
+
+The threshold was selected and measured on the same showcase subset, so these numbers describe the prototype experiment rather than an independent production estimate. The exact summary and all 570 per-file scores are available in `evaluation/`.
+
+## Requirements
+
+- Windows or macOS with at least 8 GB RAM
+- Python 3.11 or 3.12
+- FFmpeg
+- Internet access during first-time installation; torchvision may download official ResNet-18 weights once
+
+Python 3.13 or later is not recommended for the pinned package set.
 
 ### Install FFmpeg
 
-macOS with Homebrew:
+macOS:
 
 ```bash
 brew install ffmpeg
 ```
 
-If `brew` is not available, install it from [brew.sh](https://brew.sh/) and rerun the command.
-
-Windows PowerShell with Winget:
+Windows PowerShell:
 
 ```powershell
 winget install --id Gyan.FFmpeg --source winget
 ```
 
-Close and reopen the terminal, then check:
+Close and reopen the terminal, then verify:
 
 ```bash
 ffmpeg -version
 ```
 
 ## Run on macOS
-
-Open Terminal, clone the repository, and move into the project:
 
 ```bash
 git clone https://github.com/HarshSaand/deepshield-approvalguard.git
@@ -85,15 +127,9 @@ python -m pip install -r requirements.txt
 python api.py
 ```
 
-Wait until the terminal shows an address, then open:
-
-[http://127.0.0.1:8091](http://127.0.0.1:8091)
-
-Keep the terminal open while using the website. Stop the program with `Control + C`.
+Open [http://127.0.0.1:8091](http://127.0.0.1:8091) in a browser. Keep the terminal open while using the application and press `Control + C` to stop it.
 
 ## Run on Windows
-
-Open PowerShell in the project folder. A simple method is to open the folder in File Explorer, click the address bar, type `powershell`, and press Enter.
 
 ```powershell
 git clone https://github.com/HarshSaand/deepshield-approvalguard.git
@@ -105,104 +141,76 @@ python -m pip install -r requirements.txt
 python api.py
 ```
 
-If PowerShell blocks activation, run this once in the same window:
+If PowerShell blocks activation:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\.venv\Scripts\Activate.ps1
 ```
 
-Open [http://127.0.0.1:8091](http://127.0.0.1:8091). Stop the program with `Control + C`.
+Then open [http://127.0.0.1:8091](http://127.0.0.1:8091).
 
-## Use the website
+## Test the application
 
-### Guided demonstration
+### Guided cases
 
-1. Start with **Supplier payment**.
-2. Press play to see the visible identity-region splice between roughly 1.6 and 3.1 seconds.
-3. Compare the four evidence cards. They are kept separate because they answer different questions.
-4. Click a timeline section to jump to that point in the recording.
-5. Try **Treasury release**, **Limit increase**, and the **synthetic control**.
-6. Download the JSON evidence record if you want to inspect the model names, timestamps, file hash, quality fields, and review suggestion.
+Use the guided demonstration to compare a supplier-payment face edit, treasury audio replacement, limit-increase timing mismatch, and a control recording. Select timeline sections to jump to the corresponding evidence and download the JSON record for technical inspection.
 
-### Test your own file
+### Upload a file
 
-1. Select **Test a file**.
-2. Choose an MP4, MOV, WebM, MKV, AVI, WAV, FLAC, MP3, or M4A file.
-3. Click **Analyse locally**.
-4. Wait for the results. A short video normally takes a few seconds after the models have loaded.
+Select **Test a file**, choose an MP4, MOV, WebM, MKV, AVI, WAV, FLAC, MP3, or M4A file, and click **Analyse locally**. Audio-only files correctly omit the visual and lip-sync branches. Uploaded media is processed through a temporary local copy that is deleted after analysis.
 
-The prototype processes uploads in a temporary local file and deletes that temporary copy after analysis.
+Two useful ASVspoof examples are:
 
-## Dataset and measurements
-
-`dataset/` contains the directly playable 24-file video pack and a 24-file ASVspoof audio example pack. `DATASET_OPTIONS.md` ranks additional sources including PartialSpoof, In-the-Wild Audio, AV-Deepfake1M, FakeAVCeleb, FaceForensics++, Celeb-DF v2, DF40 and LlamaPartialSpoof.
-
-The included AASIST result was measured locally on a balanced 570-file ASVspoof 2021 DF subset:
-
-- ROC-AUC: 0.9078;
-- equal error rate: 18.60%;
-- accuracy at the subset-selected EER threshold: 81.40%;
-- spoof precision: 81.40%;
-- spoof recall: 81.40%;
-- 17.44 ms mean model time per audio file on Apple MPS.
-
-That threshold was selected and measured on the same showcase subset. Treat it as a transparent prototype measurement, not an independent production estimate. The exact JSON and 570 per-file scores are in `evaluation/`.
-
-## Recreate and validate the included media
-
-With the virtual environment active:
-
-```bash
-python scripts/generate_demo_pack.py
-python scripts/validate_demo_pack.py
+```text
+dataset/asvspoof_examples/audio/DF_E_2000053.flac  bona-fide
+dataset/asvspoof_examples/audio/DF_E_2000011.flac  spoof
 ```
 
-The validation checks that all 24 files exist, decode correctly, contain audio and video, and are five seconds long.
+## Validate the project
 
-## Run automated tests
+Run the automated tests:
 
 ```bash
 python -m pytest -q
 ```
 
-## Common problems
+Validate that all demonstration videos exist, decode, and contain both audio and video:
 
-### `python` or `py` is not recognised
-
-Install Python 3.12, reopen the terminal, and repeat the version check above.
-
-### `ffmpeg` is not recognised
-
-Install FFmpeg, close and reopen the terminal, and run `ffmpeg -version`.
-
-### The first run appears slow
-
-PyTorch is loading three model branches and may download the official ResNet-18 ImageNet weights once. Later analyses are faster.
-
-### The browser says the page cannot be reached
-
-The terminal running `python api.py` must remain open. Use port 8091, not 8080 or 8090.
-
-### A model score looks wrong on a demo clip
-
-The included clips are synthetic workflow fixtures and are outside the training domains of AASIST and Meso4. Inspect the known label and timeline, but do not treat fixture behaviour as model accuracy. Use the benchmark preparation guidance in `DATASET_CARD.md` for a formal study.
-
-## Folder guide
-
-```text
-approvalguard/       AI and media-processing pipeline
-dataset/             24 playable MP4s plus 24 labelled ASVspoof audio examples
-evaluation/          local measurements and per-file scores
-models/              AASIST and Meso4 code/checkpoints
-scripts/             dataset preparation and evaluation utilities
-static/              local web interface
-tests/               automated checks
-api.py               starts the application
-API.md               API schema and request examples
-DATASET_CARD.md      dataset scope, provenance and limitations
-DATASET_OPTIONS.md   ranked options for broader evaluation
-THIRD_PARTY_MODELS.md model sources, hashes and usage boundaries
+```bash
+python scripts/validate_demo_pack.py
 ```
 
-For model sources, licences, checkpoint hashes, and boundaries, read `THIRD_PARTY_MODELS.md`.
+Recreate the project-owned demonstration pack if required:
+
+```bash
+python scripts/generate_demo_pack.py
+```
+
+## Repository structure
+
+```text
+approvalguard/         model adapters and evidence pipeline
+dataset/               labelled MP4 and ASVspoof example packs
+evaluation/            local metrics and 570 per-file AASIST scores
+models/                AASIST/Meso4 code and bundled checkpoints
+scripts/               data preparation, evaluation, and validation
+static/                browser interface
+tests/                 API and pipeline tests
+api.py                 local Flask application
+API.md                 request schema and response example
+DATASET_CARD.md        provenance, scope, and evaluation limitations
+DATASET_OPTIONS.md     ranked datasets for broader evaluation
+THIRD_PARTY_MODELS.md  model sources, hashes, and usage boundaries
+```
+
+## Technical boundaries
+
+- The prototype detects media-integrity evidence; it does not establish identity or intent.
+- AASIST was trained in an audio anti-spoofing domain and can shift under unseen speakers, codecs, noise, and generators.
+- Meso4 uses a portable centre-region crop here; a production pipeline would require robust face detection and alignment.
+- The demonstration videos are workflow fixtures outside the training domains of AASIST and Meso4.
+- Scores are evidence scales, not calibrated probabilities.
+- Deployment would require representative institutional data, independent validation, threshold calibration, monitoring, access controls, and human review.
+
+See `THIRD_PARTY_MODELS.md` for model provenance and checkpoint hashes, and `API.md` for programmatic use.
