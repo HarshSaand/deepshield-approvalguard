@@ -4,8 +4,6 @@ DeepShield ApprovalGuard is a local multimodal AI prototype for reviewing voice 
 
 The system does not make a fraud decision. It analyses each modality separately, shows where suspicious evidence appears, and produces a review suggestion that can sit alongside an institution's existing controls.
 
-**Repository:** [github.com/HarshSaand/deepshield-approvalguard](https://github.com/HarshSaand/deepshield-approvalguard)
-
 ## What the project demonstrates
 
 - real local inference with pretrained deepfake-detection models;
