@@ -4,6 +4,21 @@ DeepShield ApprovalGuard is a local multimodal AI prototype for reviewing voice 
 
 The system does not make a fraud decision. It analyses each modality separately, shows where suspicious evidence appears, and produces a review suggestion that can sit alongside an institution's existing controls.
 
+## Technical snapshot
+
+| Question | Implementation |
+|---|---|
+| What enters the system? | Audio-only or audio-video financial instruction recordings |
+| What is analysed? | Synthetic voice, face manipulation, visual continuity, media quality, and audio-video timing |
+| How is evidence presented? | Separate branch scores, timestamped segments, reasons, quality fields, and a downloadable JSON record |
+| When does it abstain? | When required streams are absent, unusable, or provide insufficient evidence |
+| What does the routing layer produce? | `STANDARD`, `REVIEW`, `ESCALATE`, or `INSUFFICIENT EVIDENCE` |
+| What does it not claim? | Identity verification, intent inference, a calibrated fraud probability, or production readiness |
+
+## Evaluation status
+
+The saved quantitative experiment evaluates the **AASIST audio branch only**. The visual, continuity, synchronisation, and combined routing branches are demonstrated with functional fixtures, not validated as a complete multimodal detector on an independent held-out dataset. The 24 MP4 cases verify workflow behaviour under known transformations; they do not establish generalisation to real attacks.
+
 ## What the project demonstrates
 
 - real local inference with pretrained deepfake-detection models;
