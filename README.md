@@ -4,6 +4,28 @@ DeepShield ApprovalGuard is a local multimodal AI prototype for reviewing voice 
 
 The system does not make a fraud decision. It analyses each modality separately, shows where suspicious evidence appears, and produces a review suggestion that can sit alongside an institution's existing controls.
 
+## Actual output: synthetic approval clip → review report
+
+![Actual local inference result with the bundled synthetic video visible](docs/output-showcase.png)
+
+**Input:** [`video_tampered_01.mp4`](dataset/samples/video_tampered_01.mp4), a five-second project-owned AI-generated fictional identity, animated and transformed locally with a synthetic face-region splice. There is no real source person, interview, payment or fraud incident. The purple box is part of the generated input fixture, **not a model-detected localization**.
+
+**Actual output:** the existing pipeline returned `ESCALATE` / “Hold approval and verify through a trusted channel”, with voice signal **100.00/100**, face-manipulation signal **74.61/100** and audio–visual mismatch signal **5.54/100**. These are uncalibrated evidence indices, not fraud probabilities or accuracy percentages. The screenshot shows the running review UI at 2.4 seconds, its timestamped evidence and downloadable report. [Inspect the actual JSON result](docs/output-example.json), including the input SHA-256, model branches, quality checks and routing explanation. One recorded inference took **5.33 seconds** on this local machine; this is a single run, not a latency benchmark.
+
+This example demonstrates executable media analysis and review routing on a synthetic fixture. It does **not** validate real-world multimodal deepfake detection. The separate audio evaluation below has a different scope.
+
+Reproduce after installing the project's dependencies and FFmpeg:
+
+```sh
+python api.py
+# In a second terminal; optional screenshot dependency:
+pip install playwright
+python -m playwright install chromium
+python scripts/capture_output.py --url http://127.0.0.1:8091
+```
+
+The capture script opens the live app, waits for its actual `/api/scenarios/video_tampered_01/analyze` response, saves that JSON, seeks the input video and captures the resulting page. It also checks the report-download action. Model scores can vary slightly with device/runtime; `processing_ms` naturally varies.
+
 ## Technical snapshot
 
 | Question | Implementation |

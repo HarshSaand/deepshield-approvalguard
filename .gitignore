@@ -9,3 +9,5 @@ uploads/*
 FOUNDER_EMAIL.md
 PROJECT_REPORT.pdf
 PROJECT_REPORT.docx
+
+.showcase-deps/
