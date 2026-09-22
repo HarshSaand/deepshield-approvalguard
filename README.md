@@ -1,5 +1,7 @@
 # DeepShield ApprovalGuard
 
+[Read the project report (PDF)](docs/PROJECT_REPORT.pdf) · [Explore the explanation and flow diagram](docs/PROJECT_REPORT.md)
+
 DeepShield ApprovalGuard is a local multimodal AI prototype for reviewing voice and video instructions associated with sensitive financial actions. It is designed around a practical question: before a payment, account recovery, limit change, or treasury instruction moves forward, can AI surface media-integrity signals that deserve a closer look?
 
 The system does not make a fraud decision. It analyses each modality separately, shows where suspicious evidence appears, and produces a review suggestion that can sit alongside an institution's existing controls.
